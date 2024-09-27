@@ -30,7 +30,6 @@ flappy = Bird(100, int(screen_height / 2))
 
 bird_group.add(flappy)
 
-
 run = True
 while run:
     clock.tick(fps)
