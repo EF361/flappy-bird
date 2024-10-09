@@ -5,21 +5,21 @@ import random
 # import self define game modules
 from bird import Bird
 from pipe import Pipe
+from button import Button
 
+# settings
 pygame.init()
-
 clock = pygame.time.Clock()
 fps = 60
 
+# windows settings
 screen_width = 648
 screen_height = 702
-
 screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption("Flappy Bird")
 
-# define font
+# define font, colors
 font = pygame.font.SysFont("Bauhaus 93", 60)
-# define colours
 white = (255, 255, 255)
 
 # define game variables
@@ -36,21 +36,33 @@ pass_pipe = False
 # load images
 bg = pygame.image.load("img/bg.png")
 ground_img = pygame.image.load("img/ground.png")
+button_img = pygame.image.load("img/restart.png")
 
 
+# functions
 def draw_text(text, font, text_col, x, y):
     img = font.render(text, True, text_col)
     screen.blit(img, (x, y))
 
 
+def reset_game():
+    pipe_group.empty()
+    flappy.rect.x = 100
+    flappy.rect.y = int(screen_height / 2)
+    score = 0
+    return score
+
+
+# make them into a group
 bird_group = pygame.sprite.Group()
 pipe_group = pygame.sprite.Group()
 
-
+# define objects and add it into a group
 flappy = Bird(100, int(screen_height / 2))
-
 bird_group.add(flappy)
 
+# create restart button instance
+button = Button(screen_width // 2 - 50, screen_height // 2 - 100, button_img)
 
 run = True
 while run:
@@ -59,6 +71,7 @@ while run:
     # draw background
     screen.blit(bg, (0, 0))
 
+    # draw bird and update
     bird_group.draw(screen)
     bird_group.update(flying, game_over)
     pipe_group.draw(screen)
@@ -110,6 +123,12 @@ while run:
             ground_scroll = 0
 
         pipe_group.update()
+
+    # check for game over and reset
+    if game_over:
+        if button.draw(screen):
+            game_over = False
+            score = reset_game()
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
