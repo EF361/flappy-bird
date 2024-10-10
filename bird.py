@@ -2,7 +2,7 @@ import pygame
 
 
 class Bird(pygame.sprite.Sprite):
-    def __init__(self, x, y):
+    def __init__(self, x, y, vel):
         pygame.sprite.Sprite.__init__(self)
         self.images = []
         self.index = 0
@@ -13,7 +13,7 @@ class Bird(pygame.sprite.Sprite):
         self.image = self.images[self.index]
         self.rect = self.image.get_rect()
         self.rect.center = [x, y]
-        self.vel = 0
+        self.vel = vel
         self.clicked = False
 
     def update(self, flying, game_over):

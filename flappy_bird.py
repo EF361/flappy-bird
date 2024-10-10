@@ -32,6 +32,7 @@ pipe_frequency = 1500  # milliseconds
 last_pipe = pygame.time.get_ticks() - pipe_frequency
 score = 0
 pass_pipe = False
+vel = 0
 
 # load images
 bg = pygame.image.load("img/bg.png")
@@ -50,6 +51,19 @@ def reset_game():
     flappy.rect.x = 100
     flappy.rect.y = int(screen_height / 2)
     score = 0
+
+    # Reset bird's orientation if it has an angle attribute
+    flappy.vel = 0  # Assuming 'angle' controls the bird's rotation
+
+    # Reset other game variables
+    score = 0
+    global flying
+    flying = False
+    global game_over
+    game_over = False
+    global ground_scroll
+    ground_scroll = 0
+
     return score
 
 
@@ -58,7 +72,7 @@ bird_group = pygame.sprite.Group()
 pipe_group = pygame.sprite.Group()
 
 # define objects and add it into a group
-flappy = Bird(100, int(screen_height / 2))
+flappy = Bird(100, int(screen_height / 2), vel)
 bird_group.add(flappy)
 
 # create restart button instance
@@ -127,8 +141,22 @@ while run:
     # check for game over and reset
     if game_over:
         if button.draw(screen):
-            game_over = False
-            score = reset_game()
+            # Reset all relevant game variables directly
+            pipe_group.empty()  # Clear pipes
+            flappy.rect.x = 100  # Reset bird's x position
+            flappy.rect.y = int(screen_height / 2)  # Reset bird's y position
+
+            score = 0  # Reset score
+            flying = False  # Reset flying state
+            game_over = False  # Reset game over state
+            ground_scroll = 0  # Reset ground scroll
+            vel = 0
+
+            # Reset pass_pipe flag
+            pass_pipe = False
+
+            # Reset last_pipe to allow for immediate pipe generation after restart
+            last_pipe = pygame.time.get_ticks() - pipe_frequency
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
