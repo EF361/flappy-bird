@@ -51,11 +51,8 @@ def reset_game():
     flappy.rect.x = 100
     flappy.rect.y = int(screen_height / 2)
     score = 0
+    flappy.vel = 0
 
-    # Reset bird's orientation if it has an angle attribute
-    flappy.vel = 0  # Assuming 'angle' controls the bird's rotation
-
-    # Reset other game variables
     score = 0
     global flying
     flying = False

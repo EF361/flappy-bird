@@ -30,6 +30,7 @@ class Bird(pygame.sprite.Sprite):
             if pygame.mouse.get_pressed()[0] == 1 and not self.clicked:
                 self.clicked = True
                 self.vel = -10
+
             if pygame.mouse.get_pressed()[0] == 0:
                 self.clicked = False
 
