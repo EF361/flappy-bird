@@ -1,110 +1,84 @@
-# Flappy Bird 🔥🐦
+# Flappy Bird Clone 🚀 [![Python](https://img.shields.io/badge/Python-3.10-blue)](https://www.python.org/) [![Pygame](https://img.shields.io/badge/Pygame-2.1.3-green)](https://www.pygame.org/) [![License](https://img.shields.io/badge/License-MIT-yellow)](./LICENSE) [![Demo](https://img.shields.io/badge/Demo-Play%20Now-orange)](https://github.com/EF361/flappy-bird)
 
-![Python](https://img.shields.io/badge/Python-3.x-blue)
-![Pygame](https://img.shields.io/badge/Pygame-2.1+-green)
-![License](https://img.shields.io/badge/License-MIT-black)
-
----
-
-## 🚀 Business Value
-
-The **Flappy Bird** project is not just a game—it's a platform that merges entertainment with learning. Designed with clean, modular code, this project helps aspiring developers sharpen their Python and game development skills, while also providing players with a competitive edge through an **online leaderboard** to track performance. Whether you're here to learn, teach with live examples, or simply break high scores, this repository proves you can have fun and grow your skills simultaneously.
+## Executive Summary
+Flappy Bird Clone is a modern recreation of the iconic game, designed to entertain and educate aspiring developers. Built with Python and Pygame, it’s a lightweight, fully customizable platform for gaming enthusiasts and software learners alike. This repository empowers developers to master game mechanics, while extending gameplay through creative improvements.
 
 ---
 
-## 🛠️ Tech Stack
-
-- **Programming Language**: Python (3.x)
-- **Game Development Framework**: Pygame (2.1+)
-- **Online Features**: Leaderboard powered by a lightweight backend (details below)
-
----
-
-## 🎯 Features
-
-1. **Classic Gameplay**: Enjoy the retro-style mechanics that made Flappy Bird a phenomenon.
-2. **Online Leaderboards**: Compare your top scores in real-time against global players for a competitive edge.
-3. **Clean, Modular Codebase**: Readable and extensible architecture intended for both beginners and experienced developers.
-4. **Customization Option**: Experiment with mechanics and graphics to make the game your own.
+## Key Features
+- **Classic Gameplay Mechanics**: A seamless, pixel-perfect recreation of the original Flappy Bird experience.
+- **Extensible Game Design**: Modular, well-documented codebase to simplify contribution and experimentation.
+- **Multiplayer-Ready Architecture** _(Planned Feature Update)_: Envisioned support for online/local competitive leaderboard matches.
+- **Challenge Modes**: Customizable difficulty levels and obstacle variations to elevate engagement.
+- **Rich Developer Insights**: Includes best practices for Pygame development and community-driven extensions.
 
 ---
 
-## 🌟 How It Works
+## Architecture & Workflow
 
-Here's a high-level breakdown of how the system works:
-
-1. **Core Gameplay**
-   - Using **Pygame**, Flappy Bird simulates a side-scrolling environment.
-   - Players control a bird navigating through randomly generated pipes using simple keyboard inputs.
-
-2. **Scoring System**
-   - Points increment as the bird successfully navigates between pipes without collision. 
-   - Game logic dynamically tracks in-session scores and high scores.
-
-3. **Online Leaderboard Integration**
-   - Upon completing a game, the local score is sent via HTTP to a backend service.
-   - The backend validates submissions and updates the leaderboard appropriately.
-   - Players can retrieve the global leaderboard in real-time via the menu.
-
-4. **Educational Value**
-   - The modular architecture demonstrates concepts like:
-     - Event-driven programming with Python.
-     - Game loops and collision detection.
-     - RESTful API integration for cloud-based systems.
+```mermaid
+graph TD
+    A[Game Initialization] --> B[Load Pygame Engine]
+    B --> C[Game Loop]
+    C --> D{User Input}
+    D -- Update --> E[Player Actions]
+    E --> F[Collision Detection]
+    F --> G{End Game?}
+    G -- Yes --> H[Game Over Screen]
+    G -- No --> C
+    H --> I[Save Score]
+    I --> J[Restart/Exit]
+```
 
 ---
 
-## 📦 Installation & Setup
+## Tech Stack & Tools Breakdown
+- **Programming Language**: [Python 3.10+](https://www.python.org/)
+- **Game Library**: [Pygame 2.1.3](https://www.pygame.org/)
+- **Development Setup**: Cross-platform compatibility (Windows, macOS, Linux)
+- **Version Control**: [Git](https://git-scm.com/) for organizing contributions and collaboration
+- **Build Automation**: Easy run with `pip` for dependency management
 
-1. Clone the repository:
+---
+
+## Quickstart / Installation
+
+1. **Clone the Repository**:
    ```bash
    git clone https://github.com/EF361/flappy-bird.git
    cd flappy-bird
    ```
 
-2. Install dependencies:
+2. **Set Up a Virtual Environment** (Optional but recommended):
    ```bash
-   pip install pygame requests
+   python -m venv venv
+   source venv/bin/activate   # On Windows: venv\Scripts\activate
    ```
 
-3. Run the game:
+3. **Install Dependencies**:
    ```bash
-   python main.py
+   pip install -r requirements.txt
    ```
 
----
+4. **Run the Game**:
+   ```bash
+   python flappy_bird.py
+   ```
 
-## 🚀 Customization
-
-Feel free to tweak the functionality:
-- Modify the **difficulty level** by adjusting pipe speeds or spawn intervals.
-- Redesign elements by editing the **assets folder**.
-
----
-
-## 🏆 Contribute to the Leaderboard! 
-
-1. Complete as many pipes as you can.
-2. Your high score will be **automatically stored** on the global leaderboard.
-3. Visit the leaderboard menu to compare scores against global players. 
-
-Ready to disrupt the high score?
+5. **Enjoy and Contribute**:
+   Modify the code or share issues/pull requests with the community to extend this project further!
 
 ---
 
-## 🤝 Contribution Guidelines
+## Community Contribution & Roadmap
+We aspire to make this project a collaborative success. Here's what we're working on:
+- Adding **multiplayer mode** for live competitive play.
+- Introducing **adaptive challenges** for varying player skills.
+- Optional **AI-powered gameplay demos** as reference points.
 
-We welcome all contributions! Here's how you can help:
-1. **Fix issues** or propose new features via pull requests.
-2. **Extend the leaderboard backend** to include advanced scoring metrics or authentication.
-3. Share your game modifications with the community!
-
----
-
-## 📄 License
-
-This project is licensed under the **MIT License**—you’re free to use, modify, and distribute the code for personal or commercial purposes.
+Feel free to open a discussion thread or suggest enhancements via GitHub issues. Together, we can build something extraordinary!
 
 ---
 
-Thank you for playing and contributing to **Flappy Bird**! 🌟 Happy coding!
+**Author**: [Alicia Goh (EF361)](https://github.com/EF361)  
+_A passionate AI & Software Engineer exploring boundary-pushing solutions in gaming architecture._
