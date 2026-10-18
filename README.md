@@ -1,122 +1,95 @@
-# Flappy Bird [![Python](https://img.shields.io/badge/Python-3.10%2B-blue)](https://www.python.org/downloads/release/python-3100/) [![Pygame](https://img.shields.io/badge/Pygame-2.1.3-green)](https://www.pygame.org/news) [![License](https://img.shields.io/badge/License-MIT-yellow)](LICENSE) [![Demo](https://img.shields.io/badge/Live-Demo-red)](https://example.com/demo-link)
-
-## Executive Summary
-Flappy Bird is a classic side-scrolling game brought to life with Python and Pygame. This repository is a modernized take on the arcade favorite, offering modular game architecture, customizable game mechanics, and opportunities for developers to learn or expand their knowledge of Python-based 2D game development.
+# Flappy Bird - A Modern Python Implementation  
+![Python](https://img.shields.io/badge/Python-3.10%2B-blue) ![Pygame](https://img.shields.io/badge/Pygame-2.1.3-green) ![Pytest](https://img.shields.io/badge/Tests-Pass-brightgreen) ![License](https://img.shields.io/github/license/EF361/flappy-bird) [![Live Demo](https://img.shields.io/badge/Demo-Live-blueviolet)](https://your-demo-url.com)  
 
 ---
 
-## Key Features
-- **Modular Design:** Rendering, input handling, physics, collision detection, and scoring are separated into clear, maintainable modules.
-- **Customizable Gameplay:** Easily tweak gravity, pipe spacing, bird speed, and other parameters to suit various difficulty levels or experimentation.
-- **Deterministic Unit Tests:** Includes robust tests for collision detection, scoring logic, procedural pipe generation, and game-state transitions.
-- **Cross-Platform Playability:** Runs seamlessly on Windows, macOS, and Linux.
-- **Pinned Dependencies:** Ensures compatibility and stability with Python 3.10+ and Pygame 2.1.3.
-- **Asset Attribution:** All included assets are licensed and properly documented for open-source reuse.
-- **Scalable:** Readily extendable to support challenge modes, multiplayer, or additional gameplay features.
+## 🐦 Executive Summary  
+Flappy Bird is an educational and modern reimplementation of the popular arcade game, built using Python and Pygame. The project demonstrates clean coding principles, modular design, scalable architecture, and an emphasis on deterministic behavior for consistent cross-platform gameplay.
 
 ---
 
-## Architecture & Workflow
-The game architecture is designed for clarity, maintainability, and extensibility. Below is a high-level flowchart of the main components:
+## 🌟 Key Features  
+- **Deterministic Physics:** Fixed-timestep update loop ensures smooth and consistent gameplay across devices.  
+- **Headless Simulation-Friendly:** Game logic operates independently of rendering and input, enabling precise tests for edge cases, e.g., collision or score transitions.  
+- **Thorough Testing Coverage:** Includes tests for critical mechanics: collision boundaries, score progression, restarts, seeded pipe generation, pause/focus loss, and extreme frame delays.  
+- **Optimized Assets:** Image/audio files compressed for reduced size with attribution tracked in [ASSETS.md](ASSETS.md).  
+- **Cross-Version Compatibility:** Supports Python 3.10+ and Pygame 2.1.3, validated with CI pipelines.  
+- **Continuous Integration (CI):** Robust headless testing via GitHub Actions ensures reliability and compatibility.  
+- **Configurable Game Settings:** Provides flexibility to adjust bird speed, gravity strength, pipe generation timing, etc.
+
+---
+
+## 🔧 Architecture & Workflow  
 
 ```mermaid
-graph TD
-    Start[Game Initialization] --> Render[Rendering Engine]
-    Start --> Input[User Input Handling]
-    Start --> Physics[Physics Engine]
-    Start --> State[Game State Manager]
-    Physics --> Collision[Collision Detection]
-    Input --> State
-    Collision --> Scoring[Scoring System]
-    State --> Render
-    Scoring --> Render
-    Render --> End[Display Frame]
-    End --> Start
-```
+flowchart TD
+    Start[Game Start] -->|Render Loop| Render[Rendering System]
+    Start -->|Input API| Input[Input Handler]
+    Start -->|Fixed-Timestep Update| Physics[Physics Engine] --> Collision[Collision Detection]
+    Physics --> Scoring[Score Tracking]
+    Collision -->|Game Over| End[End Screen]
+    Scoring -->|Score Increments| Render
+    Input -->|User Actions| Physics
+```  
 
-### Modular Breakdown
-- **Rendering Engine:** Responsible for displaying the bird, pipes, background, and score.
-- **Input Handling:** Processes user inputs such as spacebar or touchscreen taps.
-- **Physics Engine:** Implements gravity, acceleration, velocity, and other movement mechanics.
-- **Collision Detection:** Handles interactions like bird-pipe and bird-ground collisions.
-- **Game State Manager:** Tracks game phases (start, in-progress, game-over).
-- **Scoring System:** Updates and renders the player's score based on successful pipe crossings.
+- **Rendering System:** Handles graphics, animations, and screen updates.  
+- **Input Handler:** Processes user input without blocking the main game loop.  
+- **Physics Engine:** Simulates consistent gravity and bird motion independent of frame rate.  
+- **Collision Detection:** Manages interactions between the bird, pipes, and ground.  
+- **Score Tracking:** Implements scoring logic triggered by pipe passages.  
 
 ---
 
-## Tech Stack & Tools
-- **Languages:** Python 3.10+
-- **Framework:** Pygame 2.1.3 (for game development)
-- **Testing Framework:** `pytest` for unit testing
-- **Dependency Management:** `pip` with a locked `requirements.txt`
+## 🛠️ Tech Stack & Tools  
+- **Programming Language:** Python 3.10+  
+- **Game Framework:** Pygame 2.1.3  
+- **Testing Framework:** pytest  
+- **Build & CI:** GitHub Actions (headless simulations and multi-version testing)  
+- **Asset Optimization:** Image/audio compression tools for reduced repository size.  
 
 ---
 
-## Quickstart / Installation
-Follow these steps to clone, set up, and play the game locally:
+## 🚀 Quickstart / Installation  
 
-1. **Clone the Repository:**
+1. **Clone The Repository:**  
    ```bash
    git clone https://github.com/EF361/flappy-bird.git
    cd flappy-bird
    ```
 
-2. **Setup the Virtual Environment (Optional):**
+2. **Create and Activate a Virtual Environment:**  
    ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   python -m venv env
+   source env/bin/activate   # On Windows: .\env\Scripts\activate
    ```
 
-3. **Install Dependencies:**
+3. **Install Dependencies:**  
    ```bash
    pip install -r requirements.txt
    ```
 
-4. **Run the Game:**
+4. **Run the Game:**  
    ```bash
-   python main.py
+   python flappy_bird.py
    ```
 
----
+5. **Run Tests (Optional):**  
+   ```bash
+   pytest
+   ```
 
-## Contributing
-We welcome contributions from developers of all expertise levels. Please follow these general guidelines:
-1. Fork the repository and create a feature branch (`feature/new-feature`).
-2. Write modular, well-documented code aligned with the project architecture.
-3. Add appropriate unit tests for any new functionality.
-4. Submit a pull request detailing your changes and their purpose.
-
----
-
-## Screenshots
-![Game Start](docs/screenshots/game_start.png)
-![In-Game Play](docs/screenshots/in_game.png)
-![Game Over](docs/screenshots/game_over.png)
+6. **Live Demo:**  
+   Play the game [here](https://your-demo-url.com).
 
 ---
 
-## Roadmap
-### Completed Features:
-- Procedural pipe generation
-- Gravity-based movement & score tracking
-- Game-over logic and event-driven state transitions
-
-### Upcoming Features:
-- Multiplayer support
-- Pixel-perfect physics modes
-- Advanced challenge settings (e.g., moving pipes)
-- Mobile-friendly touchscreen inputs
+## 📜 Asset Attribution  
+All images, sounds, and other external assets are attributed in [ASSETS.md](ASSETS.md). Assets comply with licensing requirements, ensuring legal and ethical usage.
 
 ---
 
-## Asset Licensing
-All game assets (sprites, background images, sound effects) are licensed under [Creative Commons](https://creativecommons.org/licenses/) or equivalent open-source licenses. Attribution is listed in `ASSETS.md`.
+## 👩‍💻 About the Author  
+
+Crafted by **Alicia Goh (EF361)**, a distinguished AI & Software Engineer specializing in clean-code design, performant architecture, and collaborative open-source contributions. Connect with Alicia on [LinkedIn](https://linkedin.com/in/alicia-goh) or check out her [GitHub page](https://github.com/EF361).  
 
 ---
-
-## License
-This project is released under the [MIT License](LICENSE), allowing free, open-source use, modification, and distribution.
-
----
-
-**Developed and maintained by [Alicia Goh](https://github.com/EF361)**, a passionate software engineer specializing in scalable, modular Python applications.
