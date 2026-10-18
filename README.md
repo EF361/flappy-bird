@@ -1,95 +1,78 @@
-# Flappy Bird - A Modern Python Implementation  
-![Python](https://img.shields.io/badge/Python-3.10%2B-blue) ![Pygame](https://img.shields.io/badge/Pygame-2.1.3-green) ![Pytest](https://img.shields.io/badge/Tests-Pass-brightgreen) ![License](https://img.shields.io/github/license/EF361/flappy-bird) [![Live Demo](https://img.shields.io/badge/Demo-Live-blueviolet)](https://your-demo-url.com)  
+# Flappy Bird ![Python](https://img.shields.io/badge/Python-3.10%2B-blue) ![Pygame](https://img.shields.io/badge/Pygame-2.1.3-brightgreen) ![License](https://img.shields.io/badge/License-MIT-yellow) ![Build Status](https://img.shields.io/github/actions/workflow/status/EF361/flappy-bird/ci.yml?branch=main)  
 
----
+## Executive Summary  
+Flappy Bird is a modern, educational take on the iconic 2D arcade game. Designed for both developers and gaming enthusiasts, this project demonstrates advanced game engineering principles, including fixed-timestep simulation, deterministic randomness, and robust CI testing, making it a powerful learning tool for real-time game mechanics in Python.  
 
-## 🐦 Executive Summary  
-Flappy Bird is an educational and modern reimplementation of the popular arcade game, built using Python and Pygame. The project demonstrates clean coding principles, modular design, scalable architecture, and an emphasis on deterministic behavior for consistent cross-platform gameplay.
+## Key Features  
+- **Fixed-timestep Simulation**: Ensures consistent gameplay across different hardware and frame rates, with interpolation for smooth rendering.
+- **Deterministic State Management**: Keeps simulation independent of wall-clock time, rendering, audio, and raw input, enabling reliable debugging and unit testing.
+- **Automated Testing Suite**: Includes tests for collision detection, scoring updates, pipe generation (with seeded randomness), and gameplay restart mechanics.
+- **Optimized Assets**: Image and audio files are compressed for performance without compromising quality. Full asset source and licensing are documented in [ASSETS.md](ASSETS.md).
+- **Headless CI Integration**: Supports Python 3.10+ and Pygame 2.1.3 across various configurations through GitHub Actions, ensuring compatibility and reliability.  
+- **Educational Codebase**: Approachable code structure for learning real-time physics, input management, and modular game design in Python.  
 
----
-
-## 🌟 Key Features  
-- **Deterministic Physics:** Fixed-timestep update loop ensures smooth and consistent gameplay across devices.  
-- **Headless Simulation-Friendly:** Game logic operates independently of rendering and input, enabling precise tests for edge cases, e.g., collision or score transitions.  
-- **Thorough Testing Coverage:** Includes tests for critical mechanics: collision boundaries, score progression, restarts, seeded pipe generation, pause/focus loss, and extreme frame delays.  
-- **Optimized Assets:** Image/audio files compressed for reduced size with attribution tracked in [ASSETS.md](ASSETS.md).  
-- **Cross-Version Compatibility:** Supports Python 3.10+ and Pygame 2.1.3, validated with CI pipelines.  
-- **Continuous Integration (CI):** Robust headless testing via GitHub Actions ensures reliability and compatibility.  
-- **Configurable Game Settings:** Provides flexibility to adjust bird speed, gravity strength, pipe generation timing, etc.
-
----
-
-## 🔧 Architecture & Workflow  
+## Architecture & Workflow  
+Flappy Bird follows a clean separation of concerns to handle simulation, input, rendering, and audio independently and efficiently.  
 
 ```mermaid
 flowchart TD
-    Start[Game Start] -->|Render Loop| Render[Rendering System]
-    Start -->|Input API| Input[Input Handler]
-    Start -->|Fixed-Timestep Update| Physics[Physics Engine] --> Collision[Collision Detection]
-    Physics --> Scoring[Score Tracking]
-    Collision -->|Game Over| End[End Screen]
-    Scoring -->|Score Increments| Render
-    Input -->|User Actions| Physics
-```  
+    A["Game Initialization (Load Assets, Set Random Seed)"] --> B["Main Loop (Fixed Timestep)"]
+    B -->|"Time Step ≤ Max Catch-up Steps"| C["Update Game Logic (State, Physics, Scoring)"]
+    C -->|"Interpolate if Needed"| D["Render Scene (Pygame)"]
+    B -->|"Extreme Delay Detected"| E["Drop Excess Updates"]
+    E --> F["Continue Game Loop"]
+    D --> F
+    C --> F
+```
 
-- **Rendering System:** Handles graphics, animations, and screen updates.  
-- **Input Handler:** Processes user input without blocking the main game loop.  
-- **Physics Engine:** Simulates consistent gravity and bird motion independent of frame rate.  
-- **Collision Detection:** Manages interactions between the bird, pipes, and ground.  
-- **Score Tracking:** Implements scoring logic triggered by pipe passages.  
+### Core Concepts:
+1. **Fixed Timestep**: Capable of handling extreme delays with a maximum catch-up limit to prevent simulation spiraling.
+2. **Interpolation Policy**: Smooth in-between frame rendering to counterbalance low-performance spikes.
+3. **Deterministic Engine**: Ensures reproducible states for debugging or multiplayer desynchronization checks.
+4. **CI Pipeline**: Runs automated headless tests to cover edge cases continuously.
 
----
+## Tech Stack & Tools Breakdown  
+- **Python 3.10+**: Core programming language for its robust ecosystem and ease of learning.  
+- **Pygame 2.1.3**: Framework for building the game's 2D interface, handling inputs, and rendering.  
+- **pytest**: Testing framework for ensuring stability across all components (state, scoring, collision, and restart).  
+- **GitHub Actions**: Implements headless CI/CD pipelines to verify game logic on supported Python and Pygame versions.  
+- **Image & Audio Assets**: Assets are optimized and fully documented in [ASSETS.md](ASSETS.md) for transparency.  
 
-## 🛠️ Tech Stack & Tools  
-- **Programming Language:** Python 3.10+  
-- **Game Framework:** Pygame 2.1.3  
-- **Testing Framework:** pytest  
-- **Build & CI:** GitHub Actions (headless simulations and multi-version testing)  
-- **Asset Optimization:** Image/audio compression tools for reduced repository size.  
+## Quickstart / Installation  
 
----
+### Requirements  
+- Python 3.10 or higher  
+- Pygame 2.1.3 or higher  
+- Compatible operating system (Windows/Mac/Linux)  
 
-## 🚀 Quickstart / Installation  
+### Repository Setup  
+Clone the repository and set up your environment:  
+```bash
+git clone https://github.com/EF361/flappy-bird.git
+cd flappy-bird
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+pip install -r requirements.txt
+```
 
-1. **Clone The Repository:**  
-   ```bash
-   git clone https://github.com/EF361/flappy-bird.git
-   cd flappy-bird
-   ```
+### Run the Game  
+Launch the game with:  
+```bash
+python main.py
+```
 
-2. **Create and Activate a Virtual Environment:**  
-   ```bash
-   python -m venv env
-   source env/bin/activate   # On Windows: .\env\Scripts\activate
-   ```
+### Run Tests  
+To validate the game logic and ensure robustness, use:  
+```bash
+pytest
+```
 
-3. **Install Dependencies:**  
-   ```bash
-   pip install -r requirements.txt
-   ```
+### Demo  
+A live demo is currently unavailable. Feel free to explore locally and contribute improvements!  
 
-4. **Run the Game:**  
-   ```bash
-   python flappy_bird.py
-   ```
+## Contributing  
+We welcome contributions to improve the game and its learning value. Please review the [CONTRIBUTING.md](CONTRIBUTING.md) guidelines to get started.  
 
-5. **Run Tests (Optional):**  
-   ```bash
-   pytest
-   ```
+---  
 
-6. **Live Demo:**  
-   Play the game [here](https://your-demo-url.com).
-
----
-
-## 📜 Asset Attribution  
-All images, sounds, and other external assets are attributed in [ASSETS.md](ASSETS.md). Assets comply with licensing requirements, ensuring legal and ethical usage.
-
----
-
-## 👩‍💻 About the Author  
-
-Crafted by **Alicia Goh (EF361)**, a distinguished AI & Software Engineer specializing in clean-code design, performant architecture, and collaborative open-source contributions. Connect with Alicia on [LinkedIn](https://linkedin.com/in/alicia-goh) or check out her [GitHub page](https://github.com/EF361).  
-
----
+Developed by **Alicia Goh (EF361)**, demonstrating software engineering excellence through a balance of clean architecture, innovation, and educational coding practices.
